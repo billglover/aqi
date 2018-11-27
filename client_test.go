@@ -13,7 +13,7 @@ func setup() (client *Client, mux *http.ServeMux, serverURL string, teardown fun
 	mux = http.NewServeMux()
 	server := httptest.NewServer(mux)
 
-	c := NewClient(nil)
+	c := NewClient(nil, "dummytoken")
 	url, _ := url.Parse(server.URL + "/")
 	c.baseURL = url
 

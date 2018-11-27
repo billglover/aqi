@@ -33,6 +33,10 @@ func testLatest(t *testing.T, name string, mock string, want Measurement) {
 	defer teardown()
 
 	mux.HandleFunc("/feed/", func(w http.ResponseWriter, r *http.Request) {
+		got, want := r.URL.Query().Get("token"), "dummytoken"
+		if got != want {
+			t.Errorf("unexpected token: got %s, want %s", got, want)
+		}
 		fmt.Fprint(w, mock)
 	})
 

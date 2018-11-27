@@ -15,7 +15,7 @@ type Measurement struct {
 // if unable to get the latest measurement.
 func (c *Client) Latest(ctx context.Context, station string) (Measurement, error) {
 	var m Measurement
-	req, err := c.NewRequest("GET", "/feed/"+station, nil)
+	req, err := c.NewRequest("GET", "/feed/"+station+"/", nil)
 	if err != nil {
 		return m, err
 	}

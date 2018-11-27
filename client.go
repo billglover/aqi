@@ -24,6 +24,7 @@ type Client struct {
 	baseURL   *url.URL
 	userAgent string
 	client    *http.Client
+	token     string
 }
 
 // ClientOptions is a set of options that can be specified when creating an
@@ -34,20 +35,20 @@ type ClientOptions struct {
 
 // NewClient returns a new AQI client. If no http.Client is provided then the
 // http.DefaultClient is used.
-func NewClient(cc *http.Client) *Client {
+func NewClient(cc *http.Client, token string) *Client {
 	if cc == nil {
 		cc = http.DefaultClient
 	}
 	url, _ := url.Parse(baseURL)
 
-	c := &Client{baseURL: url, userAgent: userAgent, client: cc}
+	c := &Client{baseURL: url, userAgent: userAgent, client: cc, token: token}
 	return c
 }
 
 // NewClientWithOptions takes ClientOptions, configures and returns a new
 // client.
-func NewClientWithOptions(cc *http.Client, opts ClientOptions) *Client {
-	c := NewClient(cc)
+func NewClientWithOptions(cc *http.Client, token string, opts ClientOptions) *Client {
+	c := NewClient(cc, token)
 	c.baseURL = opts.BaseURL
 	return c
 }
@@ -93,6 +94,10 @@ func (c *Client) NewRequest(method, urlStr string, body interface{}) (*http.Requ
 // by v.
 func (c *Client) Do(ctx context.Context, req *http.Request, v interface{}) (*http.Response, error) {
 	req = req.WithContext(ctx)
+
+	q := req.URL.Query()
+	q.Add("token", c.token)
+	req.URL.RawQuery = q.Encode()
 	resp, err := c.client.Do(req)
 
 	if err != nil {
