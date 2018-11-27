@@ -5,17 +5,17 @@ package aqi
 func RGB(aqi int) (int, int, int) {
 	switch {
 	case aqi <= 50:
-		return 0, 153, 102
+		return 0, 152, 0
 	case aqi <= 100:
-		return 255, 222, 51
+		return 255, 152, 0
 	case aqi <= 150:
-		return 255, 153, 51
+		return 255, 50, 0
 	case aqi <= 200:
-		return 204, 0, 51
+		return 255, 0, 0
 	case aqi <= 300:
-		return 102, 0, 153
+		return 255, 0, 152
 	case aqi > 300:
-		return 126, 0, 35
+		return 255, 0, 35
 	default:
 		return 0, 0, 0
 	}
