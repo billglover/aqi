@@ -13,9 +13,9 @@ func RGB(aqi int) (int, int, int) {
 	case aqi <= 200:
 		return 255, 0, 0
 	case aqi <= 300:
-		return 255, 0, 152
+		return 255, 0, 255
 	case aqi > 300:
-		return 255, 0, 35
+		return 255, 0, 75
 	default:
 		return 0, 0, 0
 	}
